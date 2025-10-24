@@ -246,7 +246,53 @@ void renameCity(){
 }
 
 
-void removeCity(){}
+void removeCity(){
+    if(city_count == 0) {
+        printf("No cities available!\n");
+        return;
+    }
+
+    displayCities();
+    int index;
+    printf("Enter city index to remove: ");
+    scanf("%d", &index);
+    clearInputBuffer();
+
+    if(index < 0 || index >= city_count) {
+        printf("Invalid city index!\n");
+        return;
+    }
+
+    printf("Are you sure you want to remove '%s'? (y/n): ", cities[index]);
+    char confirm;
+    scanf("%c", &confirm);
+    clearInputBuffer();
+
+    if(confirm == 'y' || confirm == 'Y') {
+        // Shift cities array
+        for(int i = index; i < city_count - 1; i++) {
+            stringCopy(cities[i], cities[i + 1]);
+        }
+
+        // Shift distance matrix
+        for(int i = index; i < city_count - 1; i++) {
+            for(int j = 0; j < city_count; j++) {
+                distance_matrix[i][j] = distance_matrix[i + 1][j];
+            }
+        }
+        for(int j = index; j < city_count - 1; j++) {
+            for(int i = 0; i < city_count; i++) {
+                distance_matrix[i][j] = distance_matrix[i][j + 1];
+            }
+        }
+
+        city_count--;
+        printf("City removed successfully!\n");
+    }
+}
+
+
+
 void displayCities(){
     printf("\n--- Cities List ---\n");
     for(int i = 0; i < city_count; i++) {
