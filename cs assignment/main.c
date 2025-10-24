@@ -3,12 +3,12 @@
 
 
 #define MAX_CITIES 30
-
 #define MAX_NAME_LENGTH 50
 // Global variables
 char cities[MAX_CITIES][MAX_NAME_LENGTH];
 float distance_matrix[MAX_CITIES][MAX_CITIES];
 int city_count = 0;
+
 
 // Function prototypes
 void initializeSystem();
@@ -31,50 +31,57 @@ int findCityIndex(char* city_name);
 void clearInputBuffer();
 void stringCopy(char* dest, char* src);
 
-int main() {
+int main()
+{
     initializeSystem();
 
     int choice;
-    do {
+    do
+    {
         displayMainMenu();
         printf("Enter your choice: ");
         scanf("%d", &choice);
         clearInputBuffer();
 
-        switch(choice) {
-            case 1:
-                cityManagement();
-                break;
-            case 2:
-                distanceManagement();
-                break;
-            case 3:
-                vehicleManagement();
-                break;
-            case 4:
-                deliveryRequest();
-                break;
-            case 5:
-                reports();
-                break;
-            case 6:
-                fileHandling();
-                break;
-            case 7:
-                printf("Saving data and exiting...\n");
-                break;
-            default:
-                printf("Invalid choice! Please try again.\n");
+        switch(choice)
+        {
+        case 1:
+            cityManagement();
+            break;
+        case 2:
+            distanceManagement();
+            break;
+        case 3:
+            vehicleManagement();
+            break;
+        case 4:
+            deliveryRequest();
+            break;
+        case 5:
+            reports();
+            break;
+        case 6:
+            fileHandling();
+            break;
+        case 7:
+            printf("Saving data and exiting...\n");
+            break;
+        default:
+            printf("Invalid choice! Please try again.\n");
         }
-    } while(choice != 7);
+    }
+    while(choice != 7);
 
     return 0;
 }
 
-void initializeSystem() {
+void initializeSystem()
+{
     // Initialize distance matrix
-    for(int i = 0; i < MAX_CITIES; i++) {
-        for(int j = 0; j < MAX_CITIES; j++) {
+    for(int i = 0; i < MAX_CITIES; i++)
+    {
+        for(int j = 0; j < MAX_CITIES; j++)
+        {
             if(i == j)
                 distance_matrix[i][j] = 0;
             else
@@ -99,7 +106,8 @@ void initializeSystem() {
 
 }
 
-void displayMainMenu() {
+void displayMainMenu()
+{
     printf("\n========================================\n");
     printf("    LOGISTICS MANAGEMENT SYSTEM\n");
     printf("========================================\n");
@@ -114,24 +122,69 @@ void displayMainMenu() {
 }
 
 
-void cityManagement(){}
-void distanceManagement(){}
-void vehicleManagement(){}
-void deliveryRequest(){}
-void reports(){}
-void fileHandling(){}
+void cityManagement()
+{
+    int choice;
+    do
+    {
+        printf("\n--- City Management ---\n");
+        printf("1. Add New City\n");
+        printf("2. Rename City\n");
+        printf("3. Remove City\n");
+        printf("4. Display Cities\n");
+        printf("5. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+
+        switch(choice)
+        {
+        case 1:
+            addCity();
+            break;
+        case 2:
+            renameCity();
+            break;
+        case 3:
+            removeCity();
+            break;
+        case 4:
+            displayCities();
+            break;
+        case 5:
+            break;
+        default:
+            printf("Invalid choice!\n");
+        }
+    }
+    while(choice != 5);
+}
+
+void addCity(){}
+void renameCity(){}
+void removeCity(){}
+void displayCities(){}
+
+void distanceManagement() {}
+void vehicleManagement() {}
+void deliveryRequest() {}
+void reports() {}
+void fileHandling() {}
 
 
 
 // Custom string utility functions
-void clearInputBuffer() {
+void clearInputBuffer()
+{
     int c;
     while((c = getchar()) != '\n' && c != EOF);
 }
 
-void stringCopy(char* dest, char* src) {
+void stringCopy(char* dest, char* src)
+{
     int i = 0;
-    while(src[i] != '\0') {
+    while(src[i] != '\0')
+    {
         dest[i] = src[i];
         i++;
     }
