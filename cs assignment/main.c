@@ -209,9 +209,50 @@ void addCity(){
 }
 
 
-void renameCity(){}
+void renameCity(){
+        if(city_count == 0) {
+        printf("No cities available!\n");
+        return;
+    }
+
+    displayCities();
+    int index;
+    printf("Enter city index to rename: ");
+    scanf("%d", &index);
+    clearInputBuffer();
+
+    if(index < 0 || index >= city_count) {
+        printf("Invalid city index!\n");
+        return;
+    }
+
+    char new_name[MAX_NAME_LENGTH];
+    printf("Enter new name for %s: ", cities[index]);
+
+    int i = 0;
+    char ch;
+    while((ch = getchar()) != '\n' && ch != EOF && i < MAX_NAME_LENGTH - 1) {
+        new_name[i++] = ch;
+    }
+    new_name[i] = '\0';
+
+    if(!isValidCityName(new_name)) {
+        printf("Invalid city name!\n");
+        return;
+    }
+
+    printf("City '%s' renamed to '%s'\n", cities[index], new_name);
+    stringCopy(cities[index], new_name);
+}
+
+
 void removeCity(){}
-void displayCities(){}
+void displayCities(){
+    printf("\n--- Cities List ---\n");
+    for(int i = 0; i < city_count; i++) {
+        printf("%d. %s\n", i, cities[i]);
+    }
+}
 
 void distanceManagement() {}
 void vehicleManagement() {}
