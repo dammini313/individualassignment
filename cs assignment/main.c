@@ -27,9 +27,17 @@ void removeCity();
 void displayCities();
 int findCityIndex(char* city_name);
 
+
+
 // Utility functions
 void clearInputBuffer();
 void stringCopy(char* dest, char* src);
+void toLowerCase(char* str);
+int isValidCityName(char* name);
+int stringCompare(char* str1, char* str2);
+int stringLength(char* str);
+int isAlphaNumeric(char c);
+char toLowerChar(char c);
 
 int main()
 {
@@ -160,7 +168,47 @@ void cityManagement()
     while(choice != 5);
 }
 
-void addCity(){}
+void addCity(){
+        if(city_count >= MAX_CITIES) {
+        printf("Maximum number of cities reached!\n");
+        return;
+    }
+
+    char city_name[MAX_NAME_LENGTH];
+    printf("Enter city name: ");
+
+    int i = 0;
+    char ch;
+    while((ch = getchar()) != '\n' && ch != EOF && i < MAX_NAME_LENGTH - 1) {
+        city_name[i++] = ch;
+    }
+    city_name[i] = '\0';
+
+    if(!isValidCityName(city_name)) {
+        printf("Invalid city name!\n");
+        return;
+    }
+
+    // Check if city already exists
+    for(int i = 0; i < city_count; i++) {
+        char temp1[MAX_NAME_LENGTH], temp2[MAX_NAME_LENGTH];
+        stringCopy(temp1, cities[i]);
+        stringCopy(temp2, city_name);
+        toLowerCase(temp1);
+        toLowerCase(temp2);
+
+        if(stringCompare(temp1, temp2) == 0) {
+            printf("City already exists!\n");
+            return;
+        }
+    }
+
+    stringCopy(cities[city_count], city_name);
+    city_count++;
+    printf("City '%s' added successfully!\n", city_name);
+}
+
+
 void renameCity(){}
 void removeCity(){}
 void displayCities(){}
@@ -190,4 +238,56 @@ void stringCopy(char* dest, char* src)
     }
     dest[i] = '\0';
 }
+int stringCompare(char* str1, char* str2) {
+    int i = 0;
+    while(str1[i] != '\0' && str2[i] != '\0') {
+        if(str1[i] != str2[i]) {
+            return str1[i] - str2[i];
+        }
+        i++;
+    }
+    return str1[i] - str2[i];
+}
 
+void toLowerCase(char* str) {
+    for(int i = 0; str[i] != '\0'; i++) {
+        str[i] = toLowerChar(str[i]);
+    }
+}
+
+int isValidCityName(char* name) {
+    int len = stringLength(name);
+    if(len == 0 || len >= MAX_NAME_LENGTH) {
+        return 0;
+    }
+
+    for(int i = 0; name[i] != '\0'; i++) {
+        if(!isAlphaNumeric(name[i]) && name[i] != ' ' && name[i] != '-') {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int stringLength(char* str) {
+    int len = 0;
+    while(str[len] != '\0') {
+        len++;
+    }
+    return len;
+}
+
+int isAlphaNumeric(char c) {
+    return (c >= '0' && c <= '9') ||
+           (c >= 'A' && c <= 'Z') ||
+           (c >= 'a' && c <= 'z');
+}
+
+
+char toLowerChar(char c) {
+    if(c >= 'A' && c <= 'Z') {
+        return c + 32;
+    }
+    return c;
+}
