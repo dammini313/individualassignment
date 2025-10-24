@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1761265767 source:c:\users\user\desktop\logistictesting2\main.c
+	<stdio.h>
+	<stdlib.h>
+
