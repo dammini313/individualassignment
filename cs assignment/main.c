@@ -483,7 +483,65 @@ void vehicleManagement() {
 
 }
 
-void deliveryRequest() {}
+void deliveryRequest() {
+    if(city_count < 2) {
+        printf("Need at least 2 cities for delivery!\n");
+        return;
+    }
+
+    if(delivery_count >= MAX_DELIVERIES) {
+        printf("Maximum delivery records reached!\n");
+        return;
+    }
+
+    displayCities();
+    int source, destination, vehicle_choice;
+    float weight;
+
+    printf("Enter source city index: ");
+    scanf("%d", &source);
+    printf("Enter destination city index: ");
+    scanf("%d", &destination);
+    printf("Enter weight (kg): ");
+    scanf("%f", &weight);
+
+    if(source < 0 || source >= city_count || destination < 0 || destination >= city_count) {
+        printf("Invalid city indices!\n");
+        return;
+    }
+
+    if(source == destination) {
+        printf("Source and destination cannot be the same!\n");
+        return;
+    }
+
+    printf("\nSelect vehicle type:\n");
+    printf("1. Van (Capacity: 1000kg)\n");
+    printf("2. Truck (Capacity: 5000kg)\n");
+    printf("3. Lorry (Capacity: 10000kg)\n");
+    printf("Enter choice: ");
+    scanf("%d", &vehicle_choice);
+    clearInputBuffer();
+
+    if(vehicle_choice < 1 || vehicle_choice > 3) {
+        printf("Invalid vehicle choice!\n");
+        return;
+    }
+
+    vehicle_choice--;
+
+    if(weight > vehicle_capacity[vehicle_choice]) {
+        printf("Weight exceeds vehicle capacity!\n");
+        return;
+    }
+
+    if(weight <= 0) {
+        printf("Weight must be positive!\n");
+        return;
+    }
+
+    calculateDelivery(source, destination, weight, vehicle_choice);
+}
 
 void calculateDelivery(int source, int destination, float weight, int vehicle_type) {
     int current_delivery = delivery_count;
