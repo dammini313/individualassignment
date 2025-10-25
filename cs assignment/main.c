@@ -376,7 +376,30 @@ void inputDistance(){
 }
 
 void editDistance(){}
-void displayDistanceTable(){}
+void displayDistanceTable(){
+        if(city_count == 0) {
+        printf("No cities available!\n");
+        return;
+    }
+
+    printf("\n--- Distance Matrix ---\n");
+    printf("%-15s", "");
+    for(int i = 0; i < city_count; i++) {
+        printf("%-15s", cities[i]);
+    }
+    printf("\n");
+
+    for(int i = 0; i < city_count; i++) {
+        printf("%-15s", cities[i]);
+        for(int j = 0; j < city_count; j++) {
+            if(distance_matrix[i][j] == -1)
+                printf("%-15s", "N/A");
+            else
+                printf("%-15.2f", distance_matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 
 void vehicleManagement() {}
