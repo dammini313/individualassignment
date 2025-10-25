@@ -703,7 +703,46 @@ float calculatePathDistance(int path[], int length) {
     return total_distance;
 }
 
-void reports() {}
+void reports() {
+    if(delivery_count == 0) {
+        printf("No delivery records available!\n");
+        return;
+    }
+
+    printf("\n--- PERFORMANCE REPORTS ---\n");
+
+    float total_distance = 0, total_time = 0, total_revenue = 0, total_profit = 0;
+    float longest_distance = 0, shortest_distance = -1;
+    int longest_index = 0, shortest_index = 0;
+
+    for(int i = 0; i < delivery_count; i++) {
+        total_distance += delivery_distance[i];
+        total_time += delivery_estimated_time[i];
+        total_revenue += delivery_customer_charge[i];
+        total_profit += delivery_profit[i];
+
+        if(delivery_distance[i] > longest_distance) {
+            longest_distance = delivery_distance[i];
+            longest_index = i;
+        }
+
+        if(shortest_distance == -1 || delivery_distance[i] < shortest_distance) {
+            shortest_distance = delivery_distance[i];
+            shortest_index = i;
+        }
+    }
+
+    printf("a. Total Deliveries Completed: %d\n", delivery_count);
+    printf("b. Total Distance Covered: %.2f km\n", total_distance);
+    printf("c. Average Delivery Time: %.2f hours\n", total_time / delivery_count);
+    printf("d. Total Revenue: %.2f LKR\n", total_revenue);
+    printf("e. Total Profit: %.2f LKR\n", total_profit);
+    printf("f. Longest Route: %s to %s (%.2f km)\n",
+           delivery_source[longest_index], delivery_destination[longest_index], longest_distance);
+    printf("g. Shortest Route: %s to %s (%.2f km)\n",
+           delivery_source[shortest_index], delivery_destination[shortest_index], shortest_distance);
+}
+
 void fileHandling() {}
 
 
