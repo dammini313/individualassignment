@@ -743,7 +743,30 @@ void reports() {
            delivery_source[shortest_index], delivery_destination[shortest_index], shortest_distance);
 }
 
-void fileHandling() {}
+void fileHandling() {
+    printf("\n--- File Handling ---\n");
+    printf("1. Save Data to Files\n");
+    printf("2. Load Data from Files\n");
+    printf("3. Back to Main Menu\n");
+    printf("Enter your choice: ");
+
+    int choice;
+    scanf("%d", &choice);
+    clearInputBuffer();
+
+    switch(choice) {
+        case 1:
+            printf("Data saved to files.\n");
+            break;
+        case 2:
+            printf("Data loaded from files.\n");
+            break;
+        case 3:
+            break;
+        default:
+            printf("Invalid choice!\n");
+    }
+}
 
 
 
@@ -817,4 +840,20 @@ char toLowerChar(char c) {
         return c + 32;
     }
     return c;
+}
+
+
+int findCityIndex(char* city_name) {
+    for(int i = 0; i < city_count; i++) {
+        char temp1[MAX_NAME_LENGTH], temp2[MAX_NAME_LENGTH];
+        stringCopy(temp1, cities[i]);
+        stringCopy(temp2, city_name);
+        toLowerCase(temp1);
+        toLowerCase(temp2);
+
+        if(stringCompare(temp1, temp2) == 0) {
+            return i;
+        }
+    }
+    return -1;
 }
