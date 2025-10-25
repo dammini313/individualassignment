@@ -486,7 +486,33 @@ void vehicleManagement() {
 void deliveryRequest() {}
 
 void calculateDelivery(int source, int destination, float weight, int vehicle_type) {}
-float findMinimumDistance(int source, int destination) {}
+float findMinimumDistance(int source, int destination) {
+    float min_distance = -1;
+    int best_path[MAX_CITIES];
+    int best_path_length = 0;
+
+    // Check direct connection first
+    if(distance_matrix[source][destination] != -1) {
+        min_distance = distance_matrix[source][destination];
+        best_path[0] = source;
+        best_path[1] = destination;
+        best_path_length = 2;
+    }
+
+    // Use exhaustive search for paths with up to 4 cities
+    exhaustiveSearch(source, destination, &min_distance, best_path, &best_path_length);
+
+    if(min_distance != -1) {
+        printf("Optimal route: ");
+        for(int i = 0; i < best_path_length; i++) {
+            printf("%s", cities[best_path[i]]);
+            if(i < best_path_length - 1) printf(" → ");
+        }
+        printf(" (%.2f km)\n", min_distance);
+    }
+
+    return min_distance;
+}
 void exhaustiveSearch(int source, int destination, float* min_distance, int* path, int* path_length) {
     if(city_count <= 4) {
         int all_cities[MAX_CITIES];
