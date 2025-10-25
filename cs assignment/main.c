@@ -213,7 +213,6 @@ void addCity(){
     printf("City '%s' added successfully!\n", city_name);
 }
 
-
 void renameCity(){
         if(city_count == 0) {
         printf("No cities available!\n");
@@ -249,7 +248,6 @@ void renameCity(){
     printf("City '%s' renamed to '%s'\n", cities[index], new_name);
     stringCopy(cities[index], new_name);
 }
-
 
 void removeCity(){
     if(city_count == 0) {
@@ -296,14 +294,14 @@ void removeCity(){
     }
 }
 
-
-
 void displayCities(){
     printf("\n--- Cities List ---\n");
     for(int i = 0; i < city_count; i++) {
         printf("%d. %s\n", i, cities[i]);
     }
 }
+
+
 
 void distanceManagement() {
     int choice;
@@ -334,7 +332,6 @@ void distanceManagement() {
         }
     } while(choice != 4);
 }
-
 
 void inputDistance(){
         if(city_count < 2) {
