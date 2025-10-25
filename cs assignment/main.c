@@ -485,7 +485,73 @@ void vehicleManagement() {
 
 void deliveryRequest() {}
 
-void calculateDelivery(int source, int destination, float weight, int vehicle_type) {}
+void calculateDelivery(int source, int destination, float weight, int vehicle_type) {
+    int current_delivery = delivery_count;
+
+    delivery_id[current_delivery] = delivery_count + 1;
+    stringCopy(delivery_source[current_delivery], cities[source]);
+    stringCopy(delivery_destination[current_delivery], cities[destination]);
+    delivery_weight[current_delivery] = weight;
+    stringCopy(delivery_vehicle_type[current_delivery], vehicle_types[vehicle_type]);
+
+    // Find minimum distance using exhaustive search
+    delivery_distance[current_delivery] = findMinimumDistance(source, destination);
+
+    if(delivery_distance[current_delivery] == -1) {
+        printf("No valid route found between %s and %s!\n", cities[source], cities[destination]);
+        return;
+    }
+
+    // Calculate costs
+    delivery_base_cost[current_delivery] = delivery_distance[current_delivery] *
+                                         vehicle_rate_per_km[vehicle_type] *
+                                         (1 + weight / 10000.0);
+    delivery_estimated_time[current_delivery] = delivery_distance[current_delivery] /
+                                               vehicle_avg_speed[vehicle_type];
+    delivery_fuel_used[current_delivery] = delivery_distance[current_delivery] /
+                                         vehicle_fuel_efficiency[vehicle_type];
+    delivery_fuel_cost[current_delivery] = delivery_fuel_used[current_delivery] * FUEL_PRICE;
+    delivery_operational_cost[current_delivery] = delivery_base_cost[current_delivery] +
+                                                 delivery_fuel_cost[current_delivery];
+    delivery_profit[current_delivery] = delivery_base_cost[current_delivery] * 0.25;
+    delivery_customer_charge[current_delivery] = delivery_operational_cost[current_delivery] +
+                                                delivery_profit[current_delivery];
+
+    // Display results
+    printf("\n==============================================================\n");
+    printf("DELIVERY COST ESTIMATION\n");
+    printf("==============================================================\n");
+    printf("From: %s\n", delivery_source[current_delivery]);
+    printf("To: %s\n", delivery_destination[current_delivery]);
+    printf("Minimum Distance: %.2f km\n", delivery_distance[current_delivery]);
+    printf("Vehicle: %s\n", delivery_vehicle_type[current_delivery]);
+    printf("Weight: %.2f kg\n", delivery_weight[current_delivery]);
+    printf("==============================================================\n");
+    printf("Base Cost: %.2f × %.2f × (1 + %.2f/10000) = %.2f LKR\n",
+           delivery_distance[current_delivery], vehicle_rate_per_km[vehicle_type],
+           weight, delivery_base_cost[current_delivery]);
+    printf("Fuel Used: %.2f L\n", delivery_fuel_used[current_delivery]);
+    printf("Fuel Cost: %.2f LKR\n", delivery_fuel_cost[current_delivery]);
+    printf("Operational Cost: %.2f LKR\n", delivery_operational_cost[current_delivery]);
+    printf("Profit: %.2f LKR\n", delivery_profit[current_delivery]);
+    printf("Customer Charge: %.2f LKR\n", delivery_customer_charge[current_delivery]);
+    printf("Estimated Time: %.2f hours\n", delivery_estimated_time[current_delivery]);
+    printf("==============================================================\n");
+
+    delivery_count++;
+
+    printf("\nSave this delivery? (y/n): ");
+    char save;
+    scanf("%c", &save);
+    clearInputBuffer();
+
+    if(save != 'y' && save != 'Y') {
+        delivery_count--;
+        printf("Delivery not saved.\n");
+    } else {
+        printf("Delivery saved successfully!\n");
+    }
+}
 float findMinimumDistance(int source, int destination) {
     float min_distance = -1;
     int best_path[MAX_CITIES];
