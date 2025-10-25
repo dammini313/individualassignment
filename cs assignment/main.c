@@ -336,7 +336,45 @@ void distanceManagement() {
 }
 
 
-void inputDistance(){}
+void inputDistance(){
+        if(city_count < 2) {
+        printf("Need at least 2 cities to input distances!\n");
+        return;
+    }
+
+    displayCities();
+    int city1, city2;
+    float dist;
+
+    printf("Enter first city index: ");
+    scanf("%d", &city1);
+    printf("Enter second city index: ");
+    scanf("%d", &city2);
+    printf("Enter distance (km): ");
+    scanf("%f", &dist);
+    clearInputBuffer();
+
+    if(city1 < 0 || city1 >= city_count || city2 < 0 || city2 >= city_count) {
+        printf("Invalid city indices!\n");
+        return;
+    }
+
+    if(city1 == city2) {
+        printf("Distance from a city to itself must be 0!\n");
+        return;
+    }
+
+    if(dist <= 0) {
+        printf("Distance must be positive!\n");
+        return;
+    }
+
+    distance_matrix[city1][city2] = dist;
+    distance_matrix[city2][city1] = dist;
+    printf("Distance between %s and %s set to %.2f km\n",
+           cities[city1], cities[city2], dist);
+}
+
 void editDistance(){}
 void displayDistanceTable(){}
 
