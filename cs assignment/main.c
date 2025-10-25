@@ -488,7 +488,33 @@ void deliveryRequest() {}
 void calculateDelivery(int source, int destination, float weight, int vehicle_type) {}
 float findMinimumDistance(int source, int destination) {}
 void exhaustiveSearch(int source, int destination, float* min_distance, int* path, int* path_length) {}
-void generatePermutations(int cities[], int start, int end, int source, int destination, float* min_distance, int* best_path, int* best_path_length) {}
+void generatePermutations(int cities[], int start, int end, int source, int destination, float* min_distance, int* best_path, int* best_path_length) {
+    if(start == end) {
+        if(cities[0] == source && cities[end-1] == destination) {
+            float total_distance = calculatePathDistance(cities, end);
+            if(total_distance != -1 && (*min_distance == -1 || total_distance < *min_distance)) {
+                *min_distance = total_distance;
+                for(int i = 0; i < end; i++) {
+                    best_path[i] = cities[i];
+                }
+                *best_path_length = end;
+            }
+        }
+        return;
+    }
+
+    for(int i = start; i < end; i++) {
+        int temp = cities[start];
+        cities[start] = cities[i];
+        cities[i] = temp;
+
+        generatePermutations(cities, start + 1, end, source, destination, min_distance, best_path, best_path_length);
+
+        temp = cities[start];
+        cities[start] = cities[i];
+        cities[i] = temp;
+    }
+}
 
 float calculatePathDistance(int path[], int length) {
         float total_distance = 0;
