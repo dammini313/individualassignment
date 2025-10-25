@@ -27,6 +27,11 @@ void removeCity();
 void displayCities();
 int findCityIndex(char* city_name);
 
+// Distance management functions
+void inputDistance();
+void editDistance();
+void displayDistanceTable();
+
 
 
 // Utility functions
@@ -300,7 +305,42 @@ void displayCities(){
     }
 }
 
-void distanceManagement() {}
+void distanceManagement() {
+    int choice;
+    do {
+        printf("\n--- Distance Management ---\n");
+        printf("1. Input Distance\n");
+        printf("2. Edit Distance\n");
+        printf("3. Display Distance Table\n");
+        printf("4. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+
+        switch(choice) {
+            case 1:
+                inputDistance();
+                break;
+            case 2:
+                editDistance();
+                break;
+            case 3:
+                displayDistanceTable();
+                break;
+            case 4:
+                break;
+            default:
+                printf("Invalid choice!\n");
+        }
+    } while(choice != 4);
+}
+
+
+void inputDistance(){}
+void editDistance(){}
+void displayDistanceTable(){}
+
+
 void vehicleManagement() {}
 void deliveryRequest() {}
 void reports() {}
@@ -325,6 +365,7 @@ void stringCopy(char* dest, char* src)
     }
     dest[i] = '\0';
 }
+
 int stringCompare(char* str1, char* str2) {
     int i = 0;
     while(str1[i] != '\0' && str2[i] != '\0') {
