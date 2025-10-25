@@ -9,6 +9,14 @@ char cities[MAX_CITIES][MAX_NAME_LENGTH];
 float distance_matrix[MAX_CITIES][MAX_CITIES];
 int city_count = 0;
 
+// Vehicle data arrays
+char vehicle_types[3][10] = {"Van", "Truck", "Lorry"};
+int vehicle_capacity[3] = {1000, 5000, 10000};
+float vehicle_rate_per_km[3] = {30.0, 40.0, 80.0};
+float vehicle_avg_speed[3] = {60.0, 50.0, 45.0};
+float vehicle_fuel_efficiency[3] = {12.0, 6.0, 4.0};
+
+
 
 // Function prototypes
 void initializeSystem();
@@ -432,7 +440,21 @@ void displayDistanceTable(){
 }
 
 
-void vehicleManagement() {}
+void vehicleManagement() {
+        printf("\n--- Vehicle Types ---\n");
+    printf("==================================================================\n");
+    printf("%-10s %-12s %-15s %-12s %-15s\n",
+           "Type", "Capacity(kg)", "Rate/km(LKR)", "Speed(km/h)", "Efficiency(km/l)");
+    printf("==================================================================\n");
+
+    for(int i = 0; i < 3; i++) {
+        printf("%-10s %-12d %-15.2f %-12.2f %-15.2f\n",
+               vehicle_types[i], vehicle_capacity[i], vehicle_rate_per_km[i],
+               vehicle_avg_speed[i], vehicle_fuel_efficiency[i]);
+    }
+    printf("==================================================================\n");
+
+}
 void deliveryRequest() {}
 void reports() {}
 void fileHandling() {}
