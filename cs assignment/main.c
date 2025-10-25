@@ -4,10 +4,30 @@
 
 #define MAX_CITIES 30
 #define MAX_NAME_LENGTH 50
+#define MAX_DELIVERIES 50
+#define FUEL_PRICE 310.0
+
+
 // Global variables
 char cities[MAX_CITIES][MAX_NAME_LENGTH];
 float distance_matrix[MAX_CITIES][MAX_CITIES];
 int city_count = 0;
+int delivery_count = 0;
+
+// Delivery record arrays
+int delivery_id[MAX_DELIVERIES];
+char delivery_source[MAX_DELIVERIES][MAX_NAME_LENGTH];
+char delivery_destination[MAX_DELIVERIES][MAX_NAME_LENGTH];
+float delivery_weight[MAX_DELIVERIES];
+char delivery_vehicle_type[MAX_DELIVERIES][10];
+float delivery_distance[MAX_DELIVERIES];
+float delivery_base_cost[MAX_DELIVERIES];
+float delivery_fuel_used[MAX_DELIVERIES];
+float delivery_fuel_cost[MAX_DELIVERIES];
+float delivery_operational_cost[MAX_DELIVERIES];
+float delivery_profit[MAX_DELIVERIES];
+float delivery_customer_charge[MAX_DELIVERIES];
+float delivery_estimated_time[MAX_DELIVERIES];
 
 // Vehicle data arrays
 char vehicle_types[3][10] = {"Van", "Truck", "Lorry"};
@@ -39,6 +59,13 @@ int findCityIndex(char* city_name);
 void inputDistance();
 void editDistance();
 void displayDistanceTable();
+
+// Delivery functions
+void calculateDelivery(int source, int destination, float weight, int vehicle_type);
+float findMinimumDistance(int source, int destination);
+void exhaustiveSearch(int source, int destination, float* min_distance, int* path, int* path_length);
+void generatePermutations(int cities[], int start, int end, int source, int destination, float* min_distance, int* best_path, int* best_path_length);
+float calculatePathDistance(int path[], int length);
 
 
 
@@ -455,7 +482,15 @@ void vehicleManagement() {
     printf("==================================================================\n");
 
 }
+
 void deliveryRequest() {}
+
+void calculateDelivery(int source, int destination, float weight, int vehicle_type) {}
+float findMinimumDistance(int source, int destination) {}
+void exhaustiveSearch(int source, int destination, float* min_distance, int* path, int* path_length) {}
+void generatePermutations(int cities[], int start, int end, int source, int destination, float* min_distance, int* best_path, int* best_path_length) {}
+float calculatePathDistance(int path[], int length) {}
+
 void reports() {}
 void fileHandling() {}
 
