@@ -489,7 +489,17 @@ void calculateDelivery(int source, int destination, float weight, int vehicle_ty
 float findMinimumDistance(int source, int destination) {}
 void exhaustiveSearch(int source, int destination, float* min_distance, int* path, int* path_length) {}
 void generatePermutations(int cities[], int start, int end, int source, int destination, float* min_distance, int* best_path, int* best_path_length) {}
-float calculatePathDistance(int path[], int length) {}
+
+float calculatePathDistance(int path[], int length) {
+        float total_distance = 0;
+    for(int i = 0; i < length - 1; i++) {
+        if(distance_matrix[path[i]][path[i+1]] == -1) {
+            return -1;
+        }
+        total_distance += distance_matrix[path[i]][path[i+1]];
+    }
+    return total_distance;
+}
 
 void reports() {}
 void fileHandling() {}
